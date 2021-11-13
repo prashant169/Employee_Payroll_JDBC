@@ -46,7 +46,7 @@ public class EmployeePayRollService {
 	}
 
 	public double updateBasicPay(String empName, double basicPay) {
-		String UPDATE = "UPDATE employee_payroll SET BasicPay = ? WHERE EmpName = ?";
+		String UPDATE = "UPDATE employeepayroll SET BasicPay = ? WHERE EmpName = ?";
 		try {
 			preparedStatement = connection.prepareStatement(UPDATE);
 			preparedStatement.setDouble(1, basicPay);
@@ -56,7 +56,7 @@ public class EmployeePayRollService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		String sql = "SELECT * FROM employee_payroll";
+		String sql = "SELECT * FROM employeepayroll";
 		queryExecute(sql);
 		for (Employee employee : empList) {
 			if (employee.getEmpName().equals(empName)) {
@@ -68,7 +68,7 @@ public class EmployeePayRollService {
 
 	public void selectEmployee(LocalDate start, LocalDate end) {
 		ArrayList<Employee> empSelected = new ArrayList<>();
-		String select = "SELECT * FROM employee_payroll WHERE EmpStart BETWEEN ? AND ?";
+		String select = "SELECT * FROM employeepayroll WHERE EmpStart BETWEEN ? AND ?";
 		String sDate = String.valueOf(start);
 		String eDate = String.valueOf(end);
 		try {
