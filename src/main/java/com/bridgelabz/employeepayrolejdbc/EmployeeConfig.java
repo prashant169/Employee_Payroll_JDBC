@@ -3,7 +3,7 @@ package com.bridgelabz.employeepayrolejdbc;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
+  
 public class EmployeeConfig {
 
 	private static Connection connection = null;
