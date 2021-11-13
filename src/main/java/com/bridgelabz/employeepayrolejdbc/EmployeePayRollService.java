@@ -1,9 +1,7 @@
 package com.bridgelabz.employeepayrolejdbc;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,5 +64,42 @@ public class EmployeePayRollService {
 			}
 		}
 		return 0.0;
+	}
+
+	public void selectEmployee(LocalDate start, LocalDate end) {
+		ArrayList<Employee> empSelected = new ArrayList<>();
+		String select = "SELECT * FROM employee_payroll WHERE EmpStart BETWEEN ? AND ?";
+		String sDate = String.valueOf(start);
+		String eDate = String.valueOf(end);
+		try {
+			preparedStatement = connection.prepareStatement(select);
+			preparedStatement.setString(1, sDate);
+			preparedStatement.setString(2, eDate);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				Employee employee = new Employee();
+
+				employee.setEmpId(resultSet.getInt("EmpId"));
+				employee.setEmpName(resultSet.getString("EmpName"));
+				employee.setPhoneNumber(resultSet.getString("PhoneNumber"));
+				employee.setAddress(resultSet.getString("Address"));
+				employee.setDepartment(resultSet.getString("Department"));
+				employee.setEmpStart(resultSet.getString("EmpStart"));
+				employee.setBasicPay(resultSet.getDouble("BasicPay"));
+				employee.setGender(resultSet.getString("Gender"));
+				employee.setDeductions(resultSet.getDouble("Deductions"));
+				employee.setTaxablePay(resultSet.getDouble("TaxablePay"));
+				employee.setIncomeTax(resultSet.getDouble("IncomeTax"));
+				employee.setNetPay(resultSet.getDouble("NetPay"));
+
+				empSelected.add(employee);
+			}
+			for (Employee employee : empSelected) {
+				System.out.println(employee);
+			}
+
+		} catch (SQLException e) {
+			throw new EmployeeException("Invalid date");
+		}
 	}
 }
